@@ -2,28 +2,25 @@
   <div class="todo-list-box">
     <div class="circle"></div>
     <div class="content-box">
-      <p>{{todoContent}}</p>
+      <p>{{itemlists.itemlist.content}}</p>
     </div>
   </div>
 </template>
 
  <script>
-import Vue from 'vue'; 
 
 export default({
+  name:'TodoList',
   data: function() {
     return{
        todoContent:'11的地方斯蒂芬斯蒂芬11的地方斯蒂芬斯蒂芬1'
     }
   },
   props: {
-    itemList: {
-      itemList
+    todoItem: {
+      type: Object,
     },
   },
-  mounted:function(){
-    // console.log(itemList)
-  }
 });
 
 // import Vue from 'vue';

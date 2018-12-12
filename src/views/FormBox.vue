@@ -1,41 +1,39 @@
 <template>
   <div class="form-box">
     <div class="from-input">
-      <input type="text" placeholder="接下去要做什么" autofocus="autofocus">
+      <input type="text" placeholder="接下去要做什么" autofocus="autofocus" >
     </div>
-    <TodoListVue v-for="item in todoList" :key="item.id" :item-list="item"></TodoListVue>
-    <div class="botton-box">
-      <NotYetDoneVue></NotYetDoneVue>
-      <ChooseBoxVue></ChooseBoxVue>
-      <ComplatedBtnVue></ComplatedBtnVue>
-    </div>
+    <!-- <TodoListVue v-for="item in todoList" :key="item.id" :itemlist="item"></TodoListVue> -->
+    <todo-list-vue
+    v-for="(item, index) in todoList" :key="index"
+    :todo-list="item" 
+    ></todo-list-vue>
+    <buttons-vue></buttons-vue>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
 import TodoListVue from "@/views/TodoList.vue";
-import NotYetDoneVue from "@/views/NotYetDone.vue";
-import ComplatedBtnVue from "@/views/ComplatedBtn.vue";
-import ChooseBoxVue from "@/views/ChooseBox.vue";
+import buttonsVue from "@/views/buttons.vue";
 
 export default {
   name: "FormBox",
   components: {
     TodoListVue,
-    NotYetDoneVue,
-    ComplatedBtnVue,
-    ChooseBoxVue
+    buttonsVue
+  },
+  data() {
+    return {
+      todoList: [
+        {
+          cpmolate: false,
+          // content: inputContent
+        }
+      ]
+    };
   }
 };
-data: {
-  todoList: [
-    {
-      status: true,
-      content: "第一个todo"
-    }
-  ];
-}
 </script>
 
 <style lang="scss" scoped>
@@ -52,20 +50,6 @@ data: {
     }
   }
   .botton-box {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    .not-yet-done {
-      // flex: 1;
-    }
-    .choose-box {
-      // flex: 1;
-    }
-    .complated-btn {
-      // flex: 1;
-    }
   }
 }
 </style>
