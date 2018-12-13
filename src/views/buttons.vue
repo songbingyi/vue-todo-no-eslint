@@ -1,6 +1,6 @@
 <template>
   <div class="buttons">
-    <div>{{no}} items left</div>
+    <div>{{unFinishedTodo}} items left</div>
     <div class="choose-state">
       <button
         v-for="(state, index) in stateButtons"
@@ -10,24 +10,38 @@
       >{{state}}</button>
     </div>
     <div>
-      <button class="complated">complated</button>
+      <button class="complated" @click="clearComplated">clear complated</button>
     </div>
   </div>
 </template>
 
-<script lang='ts'>
+<script>
 export default {
   name: "buttons",
   data() {
     return {
       no: "1",
       stateButtons: ["all", "active", "complated"],
-      currentBtn: {}
+      currentBtn: '',
     };
   },
+  props:{
+    todoList:Array
+  },
   methods: {
-    chooseBtn: function(state: string) {
+    chooseBtn: function(state) {
       this.currentBtn = state;
+      console.log(this.todoList)
+    },
+    clearComplated () {
+      this.$emit('passClearComplated')
+    }
+  },
+  computed: {
+    unFinishedTodo() {
+      return this.todoList.filter(
+        item => item.complate == false
+      ).length
     }
   }
 };
@@ -45,7 +59,6 @@ export default {
     display: flex;
     justify-content: space-between;
     .button-all {
-      border-radius: 1px;
       outline: 0;
     }
     .choosen {

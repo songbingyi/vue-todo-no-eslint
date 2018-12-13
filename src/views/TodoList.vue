@@ -1,67 +1,47 @@
 <template>
   <div class="todo-list-box">
-    <div class="circle"></div>
-    <div class="content-box">
-      <p>{{itemlists.itemlist.content}}</p>
+    <div class="inputBox">
+      <input type="checkbox" v-model="todoItem.complate" >
     </div>
+    <div class="content-box">
+      <p>{{todoItem.content}}</p>
+    </div>
+    <button class="clearthis" @click="clearThis">X</button>
   </div>
 </template>
 
  <script>
-
-export default({
-  name:'TodoList',
+export default {
+  name: "TodoList",
   data: function() {
-    return{
-       todoContent:'11的地方斯蒂芬斯蒂芬11的地方斯蒂芬斯蒂芬1'
+    return {
+      toggleStatus: false
+    };
+  },
+  props: ["todoItem"],
+  methods: {
+    clearThis() {
+      this.$emit("clearThis", this.todoItem.id);
     }
-  },
-  props: {
-    todoItem: {
-      type: Object,
-    },
-  },
-});
-
-// import Vue from 'vue';
-// import Component from 'vue-class-component';
-
-// @Component({
-//   components: {}
-// })
-// export default class notYetDone extends Vue {
-
-// }
-
+  }
+};
 </script>
-
-
-
-
-
-
 <style scoped lang="scss">
 .todo-list-box {
   border-bottom: 1px solid #b9b9b9;
   font-size: 24px;
-  position: relative;
-  min-height: 60px;
+
+  display: flex;
+
   overflow: hidden;
-  .circle {
-    width: 30px;
-    height: 30px;
-    border: 1px solid #303030;
-    border-radius: 50%;
-    position: absolute;
-    top: 10px;
-    left: 5px;
+  .inputBox {
   }
   .content-box {
     width: 560px;
     margin-left: 46px;
-    margin-top: 10px;
     p {
       word-break: break-all;
+      line-height: 2em;
     }
   }
 }
