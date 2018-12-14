@@ -3,7 +3,7 @@
     <div class="inputBox">
       <input type="checkbox" v-model="todoItem.complate" >
     </div>
-    <div class="content-box">
+    <div class="content-box" >
       <p>{{todoItem.content}}</p>
     </div>
     <button class="clearthis" @click="clearThis">X</button>
@@ -22,7 +22,8 @@ export default {
   methods: {
     clearThis() {
       this.$emit("clearThis", this.todoItem.id);
-    }
+
+    },
   }
 };
 </script>

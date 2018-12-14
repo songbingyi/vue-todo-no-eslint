@@ -5,8 +5,8 @@
       <button
         v-for="(state, index) in stateButtons"
         :key="index"
-        :class="['button-all',currentBtn == state ? 'choosen':'']"
-        @click="chooseBtn(state)"
+        :class="['button-all',filter == state ? 'choosen':'']"
+        @click="toggle(state)"
       >{{state}}</button>
     </div>
     <div>
@@ -22,16 +22,20 @@ export default {
     return {
       no: "1",
       stateButtons: ["all", "active", "complated"],
-      currentBtn: '',
     };
   },
   props:{
-    todoList:Array
+    todoList: {
+      type: Array
+    },
+    filter: {
+      type: String
+    }
   },
   methods: {
-    chooseBtn: function(state) {
-      this.currentBtn = state;
-      console.log(this.todoList)
+    toggle: function(state) {
+ 
+      this.$emit('chooseState',state)
     },
     clearComplated () {
       this.$emit('passClearComplated')

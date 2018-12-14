@@ -3,14 +3,19 @@
     <div class="from-input">
       <input type="text" placeholder="接下去要做什么" autofocus="autofocus" @keyup.enter="addList">
     </div>
-    <!-- <TodoListVue v-for="item in todoList" :key="item.id" :itemlist="item"></TodoListVue> -->
     <todo-list-vue
-      v-for="(item, index) in todoList"
+      v-for="(item, index) in filterTodo"
       :key="index"
       :todo-item="item"
       @clearThis="clearThis"
+      @chooseState="chooseState"
     ></todo-list-vue>
-    <buttons-vue :todo-list="todoList" @passClearComplated="passClearComplated"></buttons-vue>
+    <buttons-vue
+      :todo-list="filterTodo"
+      :filter="filter"
+      @passClearComplated="passClearComplated"
+      @chooseState="chooseState"
+    ></buttons-vue>
   </div>
 </template>
 
@@ -29,8 +34,20 @@ export default {
     return {
       todoList: [],
       id: 0,
-      text: ""
+      filter: "all"
     };
+  },
+  computed: {
+    filterTodo() {
+      if(this.filter == 'all'){
+        return this.todoList
+      }
+      let status = this.filter == 'complated'? true : false;
+
+      return this.todoList.filter(
+        todo => todo.complate == status
+      )
+    }
   },
   methods: {
     addList(e) {
@@ -43,13 +60,17 @@ export default {
     },
     /**@name 清除完成的项目 */
     passClearComplated() {
-      this.todoList = [];
+      this.todoList = this.todoList.filter(
+        todo => todo.complate == false
+      )
     },
     clearThis(data) {
       let oid = this.todoList.findIndex(item => item.id == data);
       this.todoList.splice(oid, 1);
-      console.log(this.todoList);
     },
+    chooseState(d) {
+      this.filter = d;
+    }
   }
 };
 </script>
